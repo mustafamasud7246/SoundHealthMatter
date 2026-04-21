@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #fbf9f6; /* ultra light cream */
+    --foreground: #1c1917; /* near black / dark stone */
+    
+    --primary: #f59e0b; /* amber 500 */
+    --primary-dark: #d97706; /* amber 600 */
+    
+    --secondary: #57534e; /* stone 600 for highly readable paragraph text */
+    
+    --accent: #fbbf24; /* amber 400 */
+    --accent-light: #fcd34d; 
+    
+    --card: #ffffff; /* pure white for contrast */
+    --border: #e7e5e4; /* stone border */
+    --glow: rgba(245, 158, 11, 0.3);
+  }
+
+  body, * {
+    /* Cursor managed by CustomCursor component */
+  }
+
+  .dark {
+    --background: #1c1917; /* stone 900 */
+    --foreground: #ffedd5; /* warm off-white orange */
+    
+    --primary: #fb923c; /* softer orange */
+    --primary-dark: #f97316; 
+    
+    --secondary: #a8a29e; /* soft stone gray */
+    
+    --accent: #fbbf24; 
+    --accent-light: #fcd34d; 
+    
+    --card: rgba(41, 37, 36, 0.6); /* stone 800 */
+    --border: #44403c; /* stone 700 */
+    --glow: rgba(251, 146, 60, 0.15);
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-card backdrop-blur-xl border border-white/20 shadow-[0_4px_30px_rgba(0,0,0,0.05)];
+  }
+  .dark .glass {
+    @apply shadow-[0_4px_30px_var(--glow)] border border-slate-700/50;
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 20px var(--glow);
+  }
+
+  .ringlight-text {
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: ringlight-shine 3s linear infinite;
+    text-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+  }
+
+  @keyframes ringlight-shine {
+    to {
+      background-position: 200% center;
+    }
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background-color: var(--primary);
+  color: white;
+}

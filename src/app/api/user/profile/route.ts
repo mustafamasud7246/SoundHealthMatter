@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from '@/lib/auth'
 import dbConnect from "@/lib/db";
 import User from "@/models/User";
 
@@ -13,7 +13,7 @@ export async function GET(req: Request) {
 
     await dbConnect();
     const user = await User.findOne({ email: session.user.email }).select("-password");
-    
+
     return NextResponse.json(user ?? {});
   } catch (error) {
     return NextResponse.json({ message: "Error fetching user" }, { status: 500 });

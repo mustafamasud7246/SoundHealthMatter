@@ -1,4 +1,4 @@
-import { NextResponse } from "next/navigation";
+import { NextResponse } from "next/server";  // ✅ সঠিক
 import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/db";
 import User from "@/models/User";
@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     }
 
     await dbConnect();
-    
+
     // Check if user exists
     const existingUser = await User.findOne({ email: { $eq: email } });
     if (existingUser) {
@@ -21,14 +21,14 @@ export async function POST(req: Request) {
 
     // Secure Hash password (12 rounds)
     const hashedPassword = await bcrypt.hash(password, 12);
-    
+
     // Save User
     const newUser = new User({
       name,
       email,
       password: hashedPassword,
     });
-    
+
     await newUser.save();
 
     return new Response(JSON.stringify({ message: "User registered successfully" }), { status: 201 });
